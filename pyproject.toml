@@ -1,0 +1,16 @@
+[project]
+name = "mcp-server"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mcp[cli]>=1.15.0",
+    "sqlmodel",
+    "sqlalchemy",
+    "aiohttp>=3.9.0",
+    "twilio>=7.0.0",
+    "qrcode",
+    "Pillow",
+    "python-dotenv",
+]
