@@ -28,12 +28,16 @@ import httpx
 import qrcode
 from twilio.rest import Client as TwilioClient
 from dotenv import load_dotenv
+from starlette.requests import Request
+from starlette.responses import JSONResponse
 
 from mcp.server.fastmcp import Context, FastMCP, Image
 from mcp.server.session import ServerSession
-
+import uvicorn
 load_dotenv()
 
+HOST = os.getenv("HOST", "0.0.0.0")
+PORT = int(os.getenv("PORT", "8000"))
 mcp = FastMCP(
     name="Bitcoin Lightning SMS Server",
     instructions="Simple pay-per-SMS: Create charge, scan QR, pay, send SMS"
@@ -82,6 +86,11 @@ def generate_qr_code(data: str) -> Image:
     buffer = BytesIO()
     img.save(buffer, format="PNG")
     return Image(data=buffer.getvalue(), format="png")
+
+
+@mcp.custom_route("/", methods=["GET", "POST"])
+async def index(request: Request) -> dict[str, str]:
+    return JSONResponse(content={"message": "Good and healthy!"})
 
 
 @mcp.tool()
@@ -462,4 +471,4 @@ That's it! No packages, no credits, just pay and send.
 
 
 if __name__ == "__main__":
-    mcp.run(transport='sse')
+    mcp.run(transport="sse")
