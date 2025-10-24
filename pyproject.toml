@@ -1,11 +1,16 @@
+[build-system]
+requires = ["uv_build>=0.8.15,<0.9.0"]
+build-backend = "uv_build"
+
 [project]
 name = "mcp-server"
 version = "0.1.0"
-description = "Add your description here"
+description = "Bitcoin Lightning SMS Payments MCP Server"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "mcp[cli]>=1.15.0",
+    "mcp>=1.15.0",
+    "smithery>=0.4.2",
     "sqlmodel",
     "sqlalchemy",
     "aiohttp>=3.9.0",
@@ -13,4 +18,13 @@ dependencies = [
     "qrcode",
     "Pillow",
     "python-dotenv",
+    "httpx",
 ]
+
+[project.scripts]
+dev = "smithery.cli.dev:main"
+playground = "smithery.cli.playground:main"
+
+# Point to your server creation function
+[tool.smithery]
+server = "mcp_server.server:create_server"
