@@ -10,4 +10,4 @@ RUN uv sync --locked
 EXPOSE 8000
 
 # Run uvicorn
-CMD ["uv", "run", "server.py"]
+CMD ["uv", "run", "/src/mcp_server/server.py"]
